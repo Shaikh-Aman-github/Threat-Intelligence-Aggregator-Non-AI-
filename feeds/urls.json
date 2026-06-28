@@ -1,0 +1,10 @@
+[
+  {
+    "indicator": "http://evil-domain.com/login",
+    "type": "url"
+  },
+  {
+    "indicator": "http://bad-site.net/payload",
+    "type": "url"
+  }
+]

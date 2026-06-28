@@ -1,0 +1,21 @@
+{
+  "type": "bundle",
+  "id": "bundle--12345",
+  "objects": [
+    {
+      "type": "indicator",
+      "name": "Malicious IP",
+      "pattern": "[ipv4-addr:value = '192.168.1.100']"
+    },
+    {
+      "type": "indicator",
+      "name": "Malicious Domain",
+      "pattern": "[domain-name:value = 'evil.com']"
+    },
+    {
+      "type": "indicator",
+      "name": "Malicious URL",
+      "pattern": "[url:value = 'http://bad-site.com']"
+    }
+  ]
+}

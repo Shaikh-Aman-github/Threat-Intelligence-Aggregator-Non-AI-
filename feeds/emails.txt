@@ -1,0 +1,2 @@
+attacker@evil-domain.com
+phishing@malicious-site.net
