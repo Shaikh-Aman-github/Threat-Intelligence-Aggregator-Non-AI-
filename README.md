@@ -323,19 +323,6 @@ This project demonstrates:
 
 ---
 
-# Future Enhancements
-
-Possible future improvements include:
-
-* TAXII 2.1 client support
-* VirusTotal API integration
-* AbuseIPDB integration
-* Scheduled automatic feed updates
-* IOC enrichment
-* IOC search interface
-* Interactive dashboards
-* Threat intelligence REST API
-
 ---
 
 # Author

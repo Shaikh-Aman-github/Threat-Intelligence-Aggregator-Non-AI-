@@ -1,11 +1,14 @@
 # Python virtual environment
 venv/
+.env 
+.venv/
 
 # Python cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+.idea/
 
 # VS Code
 .vscode/
@@ -13,7 +16,18 @@ __pycache__/
 # Output files
 output/*
 !output/.gitkeep
+database/*.db 
+database/*.sqlite3
+
+# Uploaded & Downloaded Feeds 
+feeds/uploaded/* 
+feeds/downloaded/*
+
+# Keep folders 
+!feeds/uploaded/.gitkeep 
+!feeds/downloaded/.gitkeep
 
 # OS files
 .DS_Store
 Thumbs.db
+Desktop.ini

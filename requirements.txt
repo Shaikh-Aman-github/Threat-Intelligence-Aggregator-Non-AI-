@@ -1,0 +1,17 @@
+import os
+import csv
+import json
+import re
+import sqlite3
+import hashlib
+import ipaddress
+import shutil
+import pathlib
+import datetime
+import tkinter
+
+```text
+requests>=2.31.0
+reportlab>=4.0.9
+```
+pip freeze
