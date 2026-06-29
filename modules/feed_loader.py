@@ -3,7 +3,7 @@ import os
 import csv
 import json
 import requests
-
+from modules.config import DOWNLOADED_DIR
 
 class FeedLoader:
 
@@ -58,11 +58,7 @@ class FeedLoader:
             url.split("/")[-1]
             or "feed.txt"
         )
-        save_path = os.path.join(
-            "feeds",
-            "downloaded",
-            filename
-        )
+        save_path = DOWNLOADED_DIR / filename
         os.makedirs(
             "feeds/downloaded",
             exist_ok=True

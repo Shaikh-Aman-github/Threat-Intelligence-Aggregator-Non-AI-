@@ -12,6 +12,8 @@ from modules.reporter import ThreatReporter
 from modules.stix_parser import STIXParser
 from modules.database import ThreatDatabase
 from modules.file_validator import FeedFileValidator
+from modules.config import FEEDS_DIR
+from modules.config import UPLOADED_DIR
 
 class ThreatIntelligencePipeline:
 
@@ -34,7 +36,7 @@ class ThreatIntelligencePipeline:
 
         all_normalized_iocs = []
         self.database.clear_table() # Clear old IOC records
-        feeds_directory = "feeds"
+        feeds_directory = str(FEEDS_DIR)
         
         if not os.path.exists(feeds_directory):
             print("Feeds directory not found.")
@@ -279,10 +281,8 @@ class ThreatIntelligencePipeline:
     ):
         logs = []
         all_normalized_iocs = []
-        uploaded_directory = os.path.join(
-            "feeds",
-            "uploaded"
-        )
+        uploaded_directory = str(UPLOADED_DIR)
+
         os.makedirs(
             uploaded_directory,
             exist_ok=True

@@ -1,9 +1,10 @@
 #Dashboard.py
+import os
 import tkinter as tk
 from tkinter import (messagebox, filedialog)
 from pathlib import Path
 from datetime import datetime
-import os
+from modules.config import OUTPUT_DIR
 
 from modules.pipeline import (
     ThreatIntelligencePipeline
@@ -19,7 +20,7 @@ def start_gui():
     root.title(
         "Threat Intelligence Aggregator"
     )
-    root.geometry("1000x750")
+    root.geometry("1000x800")
     root.resizable(False, False)
     root.configure(
         bg="#f0f4f8"
@@ -133,6 +134,34 @@ def start_gui():
 
     def run_pipeline():
         try:
+            status_var.set(
+                "Status: Processing..."
+            )
+
+            upload_button.config(
+                state=tk.DISABLED
+            )
+
+            existing_button.config(
+                state=tk.DISABLED
+            )
+
+            pdf_button.config(
+                state=tk.DISABLED
+            )
+
+            output_button.config(
+                state=tk.DISABLED
+            )
+
+            reset_button.config(
+                state=tk.DISABLED
+            )
+
+            exit_button.config(
+                state=tk.DISABLED
+            )
+
             log_box.delete(
                 "1.0",
                 tk.END
@@ -183,9 +212,60 @@ def start_gui():
             status_var.set(
                 "Status: Ready"
             )
+            existing_button.config(
+                state=tk.NORMAL
+            )
+
+            upload_button.config(
+                state=tk.NORMAL
+            )
+
+            reset_button.config(
+                state=tk.NORMAL
+            )
+
+            exit_button.config(
+                state=tk.NORMAL
+            )
+
+            pdf_button.config(
+                state=tk.NORMAL
+            )
+
+            output_button.config(
+                state=tk.NORMAL
+            )
+
+            messagebox.showinfo(
+                "Completed",
+                "Threat Intelligence Processing Completed Successfully."
+            )
         except Exception as error:
             status_var.set(
                 "Status: Error"
+            )
+            existing_button.config(
+                state=tk.NORMAL
+            )
+
+            upload_button.config(
+                state=tk.NORMAL
+            )
+
+            reset_button.config(
+                state=tk.NORMAL
+            )
+
+            exit_button.config(
+                state=tk.NORMAL
+            )
+
+            pdf_button.config(
+                state=tk.DISABLED
+            )
+
+            output_button.config(
+                state=tk.DISABLED
             )
             messagebox.showerror(
                 "Pipeline Error",
@@ -235,17 +315,41 @@ def start_gui():
             pipeline = (
                 ThreatIntelligencePipeline()
             )
-            existing_btn.config(state="disabled")
-            upload_btn.config(state="disabled")
-            
+            status_var.set(
+                "Status: Processing..."
+            )
+
+            existing_button.config(
+                state=tk.DISABLED
+            )
+
+            upload_button.config(
+                state=tk.DISABLED
+            )
+
+            pdf_button.config(
+                state=tk.DISABLED
+            )
+
+            output_button.config(
+                state=tk.DISABLED
+            )
+
+            reset_button.config(
+                state=tk.DISABLED
+            )
+
+            exit_button.config(
+                state=tk.DISABLED
+            )
             stats = (
                 pipeline.process_uploaded_feeds(
                     list(file_paths)
                 )
             )
 
-            existing_btn.config(state="normal")
-            upload_btn.config(state="normal")
+            existing_button.config(state="normal")
+            upload_button.config(state="normal")
 
             if not stats:
                 messagebox.showwarning(
@@ -283,13 +387,61 @@ def start_gui():
                 f"{datetime.now().strftime('%d-%m-%Y %H:%M:%S')}"
             )
 
-            status_var.set(
-                "Status: Ready"
+            existing_button.config(
+                state=tk.NORMAL
+            )
+
+            upload_button.config(
+                state=tk.NORMAL
+            )
+
+            reset_button.config(
+                state=tk.NORMAL
+            )
+
+            exit_button.config(
+                state=tk.NORMAL
+            )
+
+            pdf_button.config(
+                state=tk.NORMAL
+            )
+
+            output_button.config(
+                state=tk.NORMAL
+            )
+
+            messagebox.showinfo(
+                "Completed",
+                "Uploaded Feed Processing Completed Successfully."
             )
 
         except Exception as error:
             status_var.set(
                 "Status: Error"
+            )
+            existing_button.config(
+                state=tk.NORMAL
+            )
+
+            upload_button.config(
+                state=tk.NORMAL
+            )
+
+            reset_button.config(
+                state=tk.NORMAL
+            )
+
+            exit_button.config(
+                state=tk.NORMAL
+            )
+
+            pdf_button.config(
+                state=tk.DISABLED
+            )
+
+            output_button.config(
+                state=tk.DISABLED
             )
             messagebox.showerror(
                 "Upload Error",
@@ -330,6 +482,37 @@ def start_gui():
                 str(error)
             )
 
+    def reset_dashboard():
+        log_box.delete(
+            "1.0",
+            tk.END
+        )
+        log_box.insert(
+            tk.END,
+            "Ready...\n"
+        )
+        feeds_var.set(
+            "Feeds Processed : 0"
+        )
+        total_var.set(
+            "Total IOCs : 0"
+        )
+        unique_var.set(
+            "Unique IOCs : 0"
+        )
+        risk_var.set(
+            "High Risk IOCs : 0"
+        )
+        status_var.set(
+            "Status: Ready"
+        )
+        pdf_button.config(
+            state=tk.DISABLED
+        )
+        output_button.config(
+            state=tk.DISABLED
+        )
+    
     # Buttons
     button_frame = tk.Frame(
         root,
@@ -344,62 +527,86 @@ def start_gui():
         "height": 2,
         "font": ("Segoe UI", 10, "bold")
     }
-    existing_btn = tk.Button(
+    existing_button = tk.Button(
         button_frame,
         text="Use Existing Feeds",
         command=run_pipeline,
         **button_style
     )
-    existing_btn.grid(
+    existing_button.grid(
         row=0,
         column=0,
         padx=10
     )
-    upload_btn = tk.Button(
+    upload_button = tk.Button(
         button_frame,
         text="Upload Feed(s)",
         command=upload_and_run_pipeline,
         **button_style
     )
-    upload_btn.grid(
+    upload_button.grid(
         row=0,
         column=1,
         padx=10
     )
 
-    tk.Button(
+    pdf_button = tk.Button(
         button_frame,
         text="Open PDF Report",
         command=open_report,
-        **button_style
-    ).grid(
+    **button_style
+    )
+    pdf_button.grid(
         row=0,
         column=2,
         padx=10
     )
 
-    tk.Button(
+    output_button = tk.Button(
         button_frame,
         text="Open Output Folder",
         command=open_output_folder,
-        **button_style
-    ).grid(
+    **button_style
+    )
+    output_button.grid(
         row=0,
         column=3,
         padx=10
     )
 
-    tk.Button(
-        root,
-        text="Exit",
-        width=22,
-        height=2,
-        font=("Segoe UI", 10, "bold"),
-        command=root.destroy
-    ).pack(
+    reset_button = tk.Button(
+        button_frame,
+        text="Reset Dashboard",
+        command=reset_dashboard,
+    **button_style
+    )
+    reset_button.grid(
+        row=1,
+        column=1,
+        padx=10,
         pady=10
     )
 
+    exit_button = tk.Button(
+        button_frame,
+        text="Exit",
+        command=root.destroy,
+        **button_style
+    )
+
+    exit_button.grid(
+        row=1,
+        column=2,
+        padx=10,
+        pady=10
+    )
+
+    pdf_button.config(
+    state=tk.DISABLED
+    )
+    output_button.config(
+        state=tk.DISABLED
+    )
     # Status Bar
     status_var = tk.StringVar(
         value="Status: Ready"

@@ -2,6 +2,10 @@
 venv/
 .env 
 .venv/
+build/
+dist/
+*.spec
+
 
 # Python cache
 __pycache__/
@@ -9,6 +13,8 @@ __pycache__/
 *.pyo
 *.pyd
 .idea/
+*.py[cod]
+*$py.class
 
 # VS Code
 .vscode/

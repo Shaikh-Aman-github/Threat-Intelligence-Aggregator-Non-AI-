@@ -1,11 +1,11 @@
 #database.py
 import sqlite3
-
+from modules.config import DATABASE_FILE
 
 class ThreatDatabase:
     def __init__(
         self,
-        db_path="database/threatintel.db"
+        db_path=str(DATABASE_FILE)
     ):
         self.connection = sqlite3.connect(
             db_path
