@@ -269,6 +269,11 @@ Run the application:
 py main.py
 ```
 
+# Running EXE Project
+
+- Use the google drive folder "Executable project file"
+- Download it run the "App" file 
+
 ---
 
 # Running the Project
