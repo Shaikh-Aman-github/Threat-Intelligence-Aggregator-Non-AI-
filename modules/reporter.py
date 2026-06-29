@@ -1,5 +1,6 @@
 #reporter.py
 import uuid
+from pathlib import Path
 from reportlab.platypus import (
     SimpleDocTemplate,
     Paragraph,
@@ -21,7 +22,7 @@ from datetime import datetime
 from collections import Counter
 from reportlab.lib.colors import HexColor
 from reportlab.lib.units import inch
-
+from modules.config import (OUTPUT_DIR)
 class ThreatReporter:
 
     def header_footer(
@@ -67,8 +68,14 @@ class ThreatReporter:
         self,
         normalized_iocs,
         correlation_report,
-        output_file="output/final_report.pdf"
+        output_file= OUTPUT_DIR / "final_report.pdf"
     ):
+        output_file = Path(output_file)
+        output_file.parent.mkdir(
+            parents=True,
+            exist_ok=True
+        )
+
         report_id = f"TI-{datetime.now().strftime('%Y%m%d')}-{str(uuid.uuid4())[:6].upper()}"
 
         total_iocs = len(
@@ -88,7 +95,7 @@ class ThreatReporter:
             ]
         )
         pdf = SimpleDocTemplate(
-            output_file,
+            str(output_file),
             rightMargin=40,
             leftMargin=40,
             topMargin=50,
@@ -1264,5 +1271,5 @@ class ThreatReporter:
             )
 
         print(
-            f"\nPDF Report Generated: {output_file}"
+             f"\nPDF Report Generated: {str(output_file)}"
         )

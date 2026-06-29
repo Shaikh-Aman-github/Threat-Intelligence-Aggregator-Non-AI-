@@ -4,15 +4,18 @@ import tkinter as tk
 from tkinter import (messagebox, filedialog)
 from pathlib import Path
 from datetime import datetime
-from modules.config import OUTPUT_DIR
+from modules.config import (
+    OUTPUT_DIR,
+    DATABASE_FILE
+)
 
 from modules.pipeline import (
     ThreatIntelligencePipeline
 )
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-OUTPUT_DIR = PROJECT_ROOT / "output"
-PDF_REPORT = OUTPUT_DIR / "final_report.pdf"
+# PROJECT_ROOT = Path(__file__).resolve().parent.parent
+# OUTPUT_DIR = PROJECT_ROOT / "output"
+# PDF_REPORT = OUTPUT_DIR / "final_report.pdf"
 
 
 def start_gui():
@@ -450,32 +453,28 @@ def start_gui():
 
     def open_report():
         try:
-            if PDF_REPORT.exists():
-                os.startfile(
-                    str(PDF_REPORT)
-                )
+            pdf_report = OUTPUT_DIR / "final_report.pdf"
+            if pdf_report.exists():
+                os.startfile(str(pdf_report))
             else:
                 messagebox.showwarning(
                     "Report Missing",
-                    f"Report not found:\n{PDF_REPORT}"
+                    f"Report not found:\n{pdf_report}"
                 )
         except Exception as error:
             messagebox.showerror(
                 "Error",
                 str(error)
             )
-
     def open_output_folder():
         try:
-            if OUTPUT_DIR.exists():
-                os.startfile(
-                    str(OUTPUT_DIR)
-                )
-            else:
-                messagebox.showwarning(
-                    "Folder Missing",
-                    "Output folder not found."
-                )
+            OUTPUT_DIR.mkdir(
+                parents=True,
+                exist_ok=True
+            )
+
+            os.startfile(str(OUTPUT_DIR))
+
         except Exception as error:
             messagebox.showerror(
                 "Error",

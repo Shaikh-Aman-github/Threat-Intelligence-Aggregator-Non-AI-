@@ -1,15 +1,23 @@
 #database.py
 import sqlite3
+from pathlib import Path
 from modules.config import DATABASE_FILE
 
 class ThreatDatabase:
     def __init__(
         self,
         db_path=str(DATABASE_FILE)
-    ):
-        self.connection = sqlite3.connect(
-            db_path
+    ):  
+        db_path = Path(db_path)
+        db_path.parent.mkdir(
+            parents=True,
+            exist_ok=True
         )
+
+        print("Database Path:", db_path)
+        print("Database Folder Exists:", Path(db_path).parent.exists())
+        self.connection = sqlite3.connect(db_path)
+
         self.create_table()
 
     def create_table(self):
